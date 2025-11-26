@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slider Interativo - Aula de Git</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d1117;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .slider-container {
+      width: 80%;
+      max-width: 900px;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 2px solid #30363d;
+      background: #161b22;
+      position: relative;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.6s ease;
+    }
+
+    .slide {
+      min-width: 100%;
+      padding: 60px;
+      box-sizing: border-box;
+    }
+
+    .slide h2 {
+      margin-top: 0;
+      color: #58a6ff;
+    }
+
+    .slide ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .code-box {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      margin-top: 15px;
+      white-space: pre-line;
+    }
+
+    .controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    button {
+      background: #238636;
+      border: none;
+      padding: 12px 20px;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #2ea043;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="slider-container">
+    <div class="slides" id="slides">
+      <div class="slide">
+        <h2>O que é Git?</h2>
+        <p>Git é um sistema de controle de versão distribuído que permite acompanhar mudanças no código ao longo do
+          tempo.</p>
+        <p>Ele facilita colaboração, versionamento, histórico e segurança dos arquivos.</p>
+
+        <h2>GitHub e Repositórios Remotos</h2>
+        <p>GitHub é uma plataforma baseada em Git para hospedar, colaborar e gerenciar projetos.</p>
+      </div>
+
+      <div class="slide">
+        <h2>Comandos Básicos</h2>
+        <ul>
+          <div class="code-box">
+            <b>git init</b> – inicia um repositório ( Somente quando não for clone )
+          </div>
+          <div class="code-box">
+            <b>git status</b> – mostra alterações
+
+          </div>
+          <div class="code-box">
+            <b>git add .</b> – adiciona arquivos
+
+          </div>
+          <div class="code-box">
+            <b>git commit -m "msg"</b> – salva mudanças
+
+          </div>
+          <div class="code-box">
+            <b>git branch -M main</b> – renomeia a branch principal para main ( usado ao criar um novo repositório )
+
+          </div>
+          <div class="code-box">
+            <b>git remote add origin https://github.com/user/projeto.git</b> – adiciona um repositório remoto ( usado ao
+            criar um novo repositório )
+
+          </div>
+        </ul>
+      </div>
+
+      <div class="slide">
+        <h2>Editando um Commit</h2>
+        <p>Você pode editar o último commit caso tenha esquecido algum arquivo ou queira alterar a mensagem.</p>
+        <div class="code-box">
+          git commit --amend
+        </div>
+        <p>Para alterar a mensagem diretamente:</p>
+        <div class="code-box">
+          git commit --amend -m "Nova mensagem do commit"
+        </div>
+      </div>
+
+      <div class="slide">
+        <h2>Renomear uma Branch</h2>
+        <p>Se você escreveu um nome errado, pode renomear assim:</p>
+        <div class="code-box">
+          git branch -m nome-antigo nome-novo
+        </div>
+        <p>Se estiver na branch atual:</p>
+        <div class="code-box">
+          git branch -m nome-novo
+        </div>
+      </div>
+
+      <div class="slide">
+        <h2>Arquivo .gitignore</h2>
+        <p>O arquivo <b>.gitignore</b> serve para ignorar arquivos e pastas no versionamento.</p>
+        <div class="code-box">
+          node_modules/
+          *.env
+          /dist
+        </div>
+        <p>Após editar o .gitignore, se arquivos já estiverem no Git:</p>
+        <div class="code-box">
+          git rm -r --cached .
+          git add .
+          git commit -m "Atualizando gitignore"
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="control-left" onclick="moveSlide(-1)">⟨</button>
+      <button class="control-right" onclick="moveSlide(1)">⟩</button>
+    </div>
+  </div>
+
+  <script>
+    let index = 0;
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+
+    function moveSlide(direction) {
+      index = (index + direction + totalSlides) % totalSlides;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+  </script>
+
+</body>
+
+</html>
